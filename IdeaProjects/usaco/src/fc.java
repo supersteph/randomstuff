@@ -1,77 +1,90 @@
+/*
+ID: xiaoyun4
+LANG: JAVA
+TASK: fc
+*/
+import java.io.*;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.StringTokenizer;
+
+/** Class point **/
 class Point
 {
-    int x, y;
+    double x, y;
 }
 
 /** Class Jarvis **/
 public class fc
 {
-    private boolean CCW(Point p, Point q, Point r)
+    static private boolean clockwise(Point p, Point q, Point r)
     {
-        int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+        double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+
 
         if (val >= 0)
             return false;
         return true;
     }
-    public void convexHull(Point[] points)
+    static public double convexHull(Point[] points)
     {
         int n = points.length;
-        /** if less than 3 points return **/
-        if (n < 3)
-            return;
+
+        if (n < 3) {
+            double total = 0.0;
+            for (int i = 0; i<n;i++) {
+                total+= points[i].x*points[i].x+points[i].y*points[i].y;
+            }
+        }
         int[] next = new int[n];
         Arrays.fill(next, -1);
 
-        /** find the leftmost point **/
+
         int leftMost = 0;
         for (int i = 1; i < n; i++)
             if (points[i].x < points[leftMost].x)
                 leftMost = i;
         int p = leftMost, q;
-        /** iterate till p becomes leftMost **/
-        do
-        {
-            /** wrapping **/
+
+        while (p != leftMost){
             q = (p + 1) % n;
             for (int i = 0; i < n; i++)
-                if (CCW(points[p], points[i], points[q]))
+                if (clockwise(points[p], points[i], points[q]))
                     q = i;
 
             next[p] = q;
             p = q;
-        } while (p != leftMost);
+        }
 
-        /** Display result **/
-        display(points, next);
+         return total(points, next);
     }
-    public void display(Point[] points, int[] next)
+    static public double total(Point[] points, int[] next)
     {
-        System.out.println("\nConvex Hull points : ");
+
+        double total = 0.0;
         for (int i = 0; i < next.length; i++)
             if (next[i] != -1)
-                System.out.println("("+ points[i].x +", "+ points[i].y +")");
+                total+=Math.hypot(points[i].x,points[i].y);
+        return total;
     }
-    /** Main function **/
-    public static void main (String[] args)
+    public static void main (String[] args) throws IOException
     {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Jarvis Algorithm Test\n");
-        /** Make an object of Jarvis class **/
-        Jarvis j = new Jarvis();
+        BufferedReader f = new BufferedReader(new FileReader("fc.in"));
 
-        System.out.println("Enter number of points n :");
-        int n = scan.nextInt();
+        int n = Integer.parseInt(f.readLine());
         Point[] points = new Point[n];
-        System.out.println("Enter "+ n +" x, y cordinates");
+
         for (int i = 0; i < n; i++)
         {
+            StringTokenizer st = new StringTokenizer(f.readLine());
             points[i] = new Point();
-            points[i].x = scan.nextInt();
-            points[i].y = scan.nextInt();
+            points[i].x = Double.parseDouble(st.nextToken());
+            points[i].y = Double.parseDouble(st.nextToken());
         }
-        j.convexHull(points);
+        double haha = convexHull(points);
+        PrintWriter out = new PrintWriter(new FileWriter("fc.out"));
+        out.printf("%.2f", haha);
+        out.close();
+        System.exit(0);
     }
 }
