@@ -1,6 +1,7 @@
 package com.swu.healthmonitor;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.speech.tts.TextToSpeech;
@@ -32,6 +33,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class AccessService extends AccessibilityService {
+    boolean tracking = false;
+    String s = "";
 
     private class email extends AsyncTask<String, Void, Void> {
         @Override
@@ -124,14 +127,9 @@ public class AccessService extends AccessibilityService {
 
     private Status curStatus = Status.ENABLE;
 
-    @Override
-    public void onServiceConnected() {
-        Log.d(LOG_TAG, "hi!!");
-    }
 
-
-    public boolean isDepressed(AccessibilityEvent event){
-        return true;
+    public boolean isDepressed(String event){
+        return false;
     }
 
     public void sendEmail(){
@@ -142,16 +140,37 @@ public class AccessService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
-//        Log.d(LOG_TAG, event.getPackageName().toString());
-        Log.d(LOG_TAG, event.toString());
 
-//        if (!mTextToSpeechInitialized) {
-//            Log.d(LOG_TAG, "Text to Speech is not ready");
-//            return;
-//        }
-        if(isDepressed(event)){
+        //Log.d(LOG_TAG, event.getPackageName().toString());
+       // Log.d(LOG_TAG, event.toString());
+
+
+        if(event.getEventType()==AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED){
+            tracking=true;
+            s=event.getText().toString().substring(1,event.getText().toString().length()-1);
+            Log.d(LOG_TAG,s);
+        }
+
+        if(event.getEventType()==AccessibilityEvent.TYPE_VIEW_HOVER_EXIT){
+            tracking=false;
+            Log.d(LOG_TAG,"submitted");
+            Log.d(LOG_TAG,s);
+            if (isDepressed(s)){
+                sendEmail();
+            }
+        }
+
+
+        //Log.d(LOG_TAG,"THIS IS A "+source.getClassName().toString());
+
+
+        if(isDepressed("")){
             sendEmail();
         }
+
+
+
+
     }
 
     @Override

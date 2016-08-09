@@ -20,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         EditText e = (EditText) findViewById(R.id.editText);
         s = e.getText().toString();
         System.out.println(s);
-
+//
         SharedPreferences settings = getSharedPreferences("com.swu.AccessibilityDemo-master",0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("address",s);
-
+//
         editor.commit();
 
     }

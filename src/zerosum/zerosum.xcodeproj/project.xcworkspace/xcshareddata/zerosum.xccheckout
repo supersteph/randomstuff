@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>73FDAC85-723C-48FD-84B9-92D414BD2579</string>
+	<key>IDESourceControlProjectName</key>
+	<string>zerosum</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>99D0329A7721A0387191F21499DB1390BCC9AB3A</key>
+		<string>https://github.com/supersteph/usaco.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>src/zerosum/zerosum.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>99D0329A7721A0387191F21499DB1390BCC9AB3A</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/supersteph/usaco.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>99D0329A7721A0387191F21499DB1390BCC9AB3A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>99D0329A7721A0387191F21499DB1390BCC9AB3A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>usaco</string>
+		</dict>
+	</array>
+</dict>
+</plist>
