@@ -35,38 +35,31 @@ public class fc
             for (int i = 0; i<n;i++) {
                 total+= points[i].x*points[i].x+points[i].y*points[i].y;
             }
+            return total;
         }
-        int[] next = new int[n];
-        Arrays.fill(next, -1);
+
 
 
         int leftMost = 0;
         for (int i = 1; i < n; i++)
             if (points[i].x < points[leftMost].x)
                 leftMost = i;
-        int p = leftMost, q;
-
-        while (p != leftMost){
+        int p = leftMost;
+        int q;
+        double total = 0.0;
+        do{
             q = (p + 1) % n;
             for (int i = 0; i < n; i++)
                 if (clockwise(points[p], points[i], points[q]))
                     q = i;
-
-            next[p] = q;
+            total+=Math.hypot(points[p].x-points[q].x, points[p].y-points[q].y);
             p = q;
-        }
 
-         return total(points, next);
-    }
-    static public double total(Point[] points, int[] next)
-    {
+        }while (p!=leftMost);
 
-        double total = 0.0;
-        for (int i = 0; i < next.length; i++)
-            if (next[i] != -1)
-                total+=Math.hypot(points[i].x,points[i].y);
-        return total;
+         return total;
     }
+
     public static void main (String[] args) throws IOException
     {
         BufferedReader f = new BufferedReader(new FileReader("fc.in"));
@@ -84,6 +77,8 @@ public class fc
         double haha = convexHull(points);
         PrintWriter out = new PrintWriter(new FileWriter("fc.out"));
         out.printf("%.2f", haha);
+        out.println();
+        System.out.println(haha);
         out.close();
         System.exit(0);
     }
