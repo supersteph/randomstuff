@@ -9,6 +9,28 @@ import java.util.*;
 
 public class starry
 {
+
+    static boolean sameele(ArrayList<Point> cur, Config config, int minx, int miny){
+        int k;
+        outerloop:
+        for(k=0;k<8;k++){
+            //check to see if cur and config.other.getk has same elements
+            boolean fo = true;
+            for(Point p:cur){
+                for(Point ha:config.other.get(k)){
+
+                    if(ha.x==p.x-minx&&p.y==ha.y-miny){
+
+                        continue outerloop;
+                    }
+                }
+
+            }
+            return true;
+
+        }
+        return false;
+    }
     static class Point{
         int x,y;
         Point(int x,int y){
@@ -88,7 +110,7 @@ public class starry
 
             String k = f.readLine();
             for(int j = 0;j<x;j++){
-    
+
                 everything[i][j]='0';
                 if(k.charAt(j)=='1'){
 
@@ -99,19 +121,19 @@ public class starry
         }
         //System.out.println(x+" "+y);
         ArrayList<Config> allthe = new ArrayList<Config>();
-        for(int i = 0; i<x;i++){
-            for(int j = 0; j<y;j++){
+        for(int i = 0; i<y;i++){
+            for(int j = 0; j<x;j++){
                 //System.out.println();
-                if(!been[j][i]&&all[j][i]){
+                if(!been[i][j]&&all[i][j]){
 
-                    been[j][i]=true;
+                    been[i][j]=true;
                     ArrayList<Point> cur = new ArrayList<Point>();
                     ArrayList<Point> total = new ArrayList<Point>();
-                    total.add(new Point(i,j));
-                    int maxx =i;
-                    int maxy = j;
-                    int minx = i;
-                    int miny = j;
+                    total.add(new Point(j,i));
+                    int maxx =j;
+                    int maxy = i;
+                    int minx = j;
+                    int miny = i;
 
                     while(total.size()!=0){
                         //System.out.println(total.get(0).x+" "+total.get(0).y+" "+i+" "+j);
@@ -185,31 +207,9 @@ public class starry
 
                     for(Config config: allthe){
                         if(((config.x==maxx-minx&&config.y==maxy-miny)||(config.y==maxx-minx&&config.x==maxy-miny))&&(config.other.get(0).size()==cur.size())){
-                            System.out.println(config.letter+" "+poss);
-                            int k;
-                            outerloop:
-                            for(k=0;k<8;k++){
-                                boolean fo = true;
-                                for(Point p:cur){
-                                    for(Point ha:config.other.get(k)){
-                                        if(ha.x==p.x&&p.y==ha.y){
-                                            fo = false;
-                                            continue outerloop;
-                                        }
-                                    }
-
-                                }
-                                System.out.println("DOING");
-                                //we made it!\
-                                if(fo) {
-
-
-                                    System.out.println("we found a same one");
-                                    poss = config.letter;
-                                    changed = true;
-                                    break;
-                                }
-
+                            if(sameele(cur,config,minx,miny)){
+                                poss = config.letter;
+                                break;
                             }
 
                         }
