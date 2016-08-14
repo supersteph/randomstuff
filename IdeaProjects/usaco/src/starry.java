@@ -10,6 +10,7 @@ import java.util.*;
 public class starry
 {
 
+    //sees if the elements in the two arrays are the same
     static boolean sameele(ArrayList<Point> cur, Config config, int minx, int miny){
         int k;
         outerloop:
@@ -60,6 +61,7 @@ public class starry
         int x;
         int y;
     }
+    //generate the 8 rotations
     static ArrayList<ArrayList<Point>> gen8(ArrayList<Point> shape, int x, int y){
         x++;
         y++;
