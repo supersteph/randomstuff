@@ -11,22 +11,23 @@ public class starry
 {
 
     //sees if the elements in the two arrays are the same
+    //precondition is that cur and config are in the same range
     static boolean sameele(ArrayList<Point> cur, Config config, int minx, int miny){
+
         int k;
+        System.out.println(minx+" "+miny);
         outerloop:
         for(k=0;k<8;k++){
             //check to see if cur and config.other.getk has same elements
             boolean fo = true;
+
             for(Point p:cur){
-                for(Point ha:config.other.get(k)){
-
-                    if(ha.x==p.x-minx&&p.y==ha.y-miny){
-
-                        continue outerloop;
-                    }
+                if(!config.other.get(k).contains(new Point(p.x-minx,p.y-miny))){
+                    continue outerloop;
                 }
 
             }
+            System.out.println("wrong");
             return true;
 
         }
@@ -210,6 +211,7 @@ public class starry
                     for(Config config: allthe){
                         if(((config.x==maxx-minx&&config.y==maxy-miny)||(config.y==maxx-minx&&config.x==maxy-miny))&&(config.other.get(0).size()==cur.size())){
                             if(sameele(cur,config,minx,miny)){
+                                changed = true;
                                 poss = config.letter;
                                 break;
                             }
