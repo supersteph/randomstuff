@@ -23,6 +23,37 @@ public class theme
           return index1+" "+index2;
         }
     }
+    static void dp(config b, int[][]tofill, int[] k, int index){
+        if(tofill[b.index1][b.index2] !=0){
+            return;
+        }
+
+
+        if(b.index2-b.index1<index+1) {
+
+            tofill[b.index1][b.index2] = 2;
+            return;
+        }
+        else if(b.index1>=k.length-1||b.index2>=k.length-1) {
+
+            tofill[b.index1][b.index2] = 2;
+        }else if(k[b.index1+1]==k[b.index2+1]){
+
+            b.index1 ++;
+            b.index2 ++;
+            dp(b,tofill,k,index+1);
+
+            tofill[b.index1-1][b.index2-1]=tofill[b.index1][b.index2]+1;
+            b.index1--;
+            b.index2--;
+
+
+        }else {
+            tofill[b.index1][b.index2] = 2;
+        }
+
+
+    }
     //given differences
     static int dostuff(int[] k){
         int  lmao=0;
@@ -41,29 +72,16 @@ public class theme
         if(configs.size()==0){
             return 0;
         }
-
-        int index = 1;
-        while (configs.size()!=0){
-            for(int i = 0; i<configs.size();i++){
-                if(configs.get(i).index2-configs.get(i).index1==index+1) {
-                    configs.remove(i);
-                    i--;
-                    continue;
-                }
-                if(configs.get(i).index1>=k.length-1||configs.get(i).index2>=k.length-1) {
-                    configs.remove(i);
-                    i--;
-                }else if(k[configs.get(i).index1+1]==k[configs.get(i).index2+1]){
-                    configs.get(i).index1 ++;
-                    configs.get(i).index2 ++;
-                }else {
-                    configs.remove(i);
-                    i--;
-                }
+        int[][] tofill = new int[k.length][k.length];
+        int max = 0;
+        for(config config:configs){
+            dp(config,tofill,k,2);
+            if(tofill[config.index1][config.index2]>max){
+                max = tofill[config.index1][config.index2];
             }
-            index++;
         }
-        return index;
+        
+        return max;
 
 
     }
