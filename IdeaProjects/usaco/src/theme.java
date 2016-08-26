@@ -80,7 +80,7 @@ public class theme
                 max = tofill[config.index1][config.index2];
             }
         }
-        
+
         return max;
 
 
