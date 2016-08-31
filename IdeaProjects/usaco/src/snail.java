@@ -11,6 +11,7 @@ import java.util.*;
 
 public class snail
 {
+    static int mat =0;
 
     static boolean cantturn(int x, int y, boolean[][] map, boolean[][] a, int dir){
         if(dir == 0){
@@ -55,7 +56,7 @@ public class snail
 
     }
 
-    static int ooo(boolean[][] a, boolean[][] map, int direction, int x, int y){
+    static int ooo(boolean[][] a, boolean[][] map, int direction, int x, int y, int cur){
         map[x][y] = true;
         for(int i = 0; i<map.length;i++){
             for(int j = 0; j<map.length;j++){
@@ -83,15 +84,19 @@ public class snail
         for(int i = 0;i<map.length;i++){
             System.out.print("-");
         }
+        if(cur>mat){
+            mat = cur;
+            System.out.println("found a max"+" "+mat);
+        }
         System.out.println();
-        int max = 0;
+        int max = 1;
         if(direction==0){
             if(x==a.length-1){
                 if(!cantturn(x,y,a,map,1)){
-                    max = Math.max(max,ooo(a,map,1,x,y+1)+1);
+                    max = Math.max(max,ooo(a,map,1,x,y+1,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,3)) {
-                    max = Math.max(max,ooo(a,map,3,x,y-1)+1);
+                    max = Math.max(max,ooo(a,map,3,x,y-1,cur+1)+1);
                 }
             }
             else if(map[x+1][y]==true){
@@ -99,15 +104,15 @@ public class snail
             }
             else if(a[x+1][y]==true){
                 if(!cantturn(x,y,a,map,1)){
-                    max = Math.max(max,ooo(a,map,1,x,y+1)+1);
+                    max = Math.max(max,ooo(a,map,1,x,y+1,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,3)) {
-                    max = Math.max(max,ooo(a,map,3,x,y-1)+1);
+                    max = Math.max(max,ooo(a,map,3,x,y-1,cur+1)+1);
                 }
 
             }
             else{
-                max = Math.max(ooo(a,map,0,x+1,y)+1,max);
+                max = Math.max(ooo(a,map,0,x+1,y,cur+1)+1,max);
 
             }
 
@@ -115,10 +120,10 @@ public class snail
         else if(direction==1){
             if(y==a.length-1){
                 if(!cantturn(x,y,a,map,0)){
-                    max = Math.max(max,ooo(a,map,0,x+1,y)+1);
+                    max = Math.max(max,ooo(a,map,0,x+1,y,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,2)){
-                    max = Math.max(max,ooo(a,map,2,x-1,y)+1);
+                    max = Math.max(max,ooo(a,map,2,x-1,y,cur+1)+1);
 
                 }
             }
@@ -127,16 +132,16 @@ public class snail
             }
             else if(a[x][y+1]==true){
                 if(!cantturn(x,y,a,map,0)){
-                    max = Math.max(max,ooo(a,map,0,x+1,y)+1);
+                    max = Math.max(max,ooo(a,map,0,x+1,y,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,2)){
-                    max = Math.max(max,ooo(a,map,2,x-1,y)+1);
+                    max = Math.max(max,ooo(a,map,2,x-1,y,cur+1)+1);
 
                 }
 
             }
             else{
-                max = Math.max(ooo(a,map,1,x,y+1)+1,max);
+                max = Math.max(ooo(a,map,1,x,y+1,cur+1)+1,max);
 
             }
         }
@@ -144,10 +149,10 @@ public class snail
 
             if(x==0){
                 if(!cantturn(x,y,a,map,1)){
-                    max = Math.max(max,ooo(a,map,1,x,y+1)+1);
+                    max = Math.max(max,ooo(a,map,1,x,y+1,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,3)) {
-                    max = Math.max(max,ooo(a,map,3,x,y-1)+1);
+                    max = Math.max(max,ooo(a,map,3,x,y-1,cur+1)+1);
                 }
             }
             else if(map[x-1][y]==true){
@@ -155,24 +160,24 @@ public class snail
             }
             else if(x==0||a[x-1][y]==true){
                 if(!cantturn(x,y,a,map,1)){
-                    max = Math.max(max,ooo(a,map,1,x,y+1)+1);
+                    max = Math.max(max,ooo(a,map,1,x,y+1,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,3)) {
-                    max = Math.max(max,ooo(a,map,3,x,y-1)+1);
+                    max = Math.max(max,ooo(a,map,3,x,y-1,cur+1)+1);
                 }
 
             }
             else{
-                max = Math.max(ooo(a,map,2,x-1,y)+1,max);
+                max = Math.max(ooo(a,map,2,x-1,y,cur+1)+1,max);
             }
         }
         else{
             if(y==0){
                 if(!cantturn(x,y,a,map,0)){
-                    max = Math.max(max,ooo(a,map,0,x+1,y)+1);
+                    max = Math.max(max,ooo(a,map,0,x+1,y,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,2)) {
-                    max = Math.max(max,ooo(a,map,2,x-1,y)+1);
+                    max = Math.max(max,ooo(a,map,2,x-1,y,cur+1)+1);
                 }
             }
 
@@ -181,15 +186,15 @@ public class snail
             }
             else if(a[x][y-1]==true){
                 if(!cantturn(x,y,a,map,0)){
-                    max = Math.max(max,ooo(a,map,0,x+1,y)+1);
+                    max = Math.max(max,ooo(a,map,0,x+1,y,cur+1)+1);
                 }
                 if(!cantturn(x,y,a,map,2)){
-                    max = Math.max(max,ooo(a,map,2,x-1,y)+1);
+                    max = Math.max(max,ooo(a,map,2,x-1,y,cur+1)+1);
 
                 }
             }
             else{
-                max = Math.max(ooo(a,map,3,x,y-1)+1,max);
+                max = Math.max(ooo(a,map,3,x,y-1,cur+1)+1,max);
             }
         }
         map[x][y] = false;
@@ -213,10 +218,10 @@ public class snail
         }
         int max = 0;
         boolean[][] fire = new boolean[n][n];
-        max = ooo(p,fire,0,0,0);
-        max = Math.max(max, ooo(p,fire,1,0,0));
-        out.println(max);
-        System.out.println(max);
+        max = ooo(p,fire,0,0,0,1);
+        max = Math.max(max, ooo(p,fire,1,0,0,1));
+        out.println(mat);
+        System.out.println(mat);
 
         
         out.close();
